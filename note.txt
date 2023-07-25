@@ -1,0 +1,154 @@
+using System;
+
+// Define the RBI interface
+public interface RBI
+{
+    void Deposit(double amount);
+    void Withdraw(double amount);
+    void HouseLoan();
+    void VehicleLoan();
+}
+
+// HDFC Bank class implementing RBI interface
+public class HDFC : RBI
+{
+    private string name;
+    private string address;
+    private DateTime opening;
+    private double amount;
+
+    private const double homeLoanInterestRate = 0.12;
+    private const double vehicleLoanInterestRate = 0.08;
+    private const double withdrawLimit = 25000;
+
+    // User-defined constructor for opening an account
+    public HDFC(string name, string address, double initialDeposit)
+    {
+        this.name = name;
+        this.address = address;
+        this.opening = DateTime.Now;
+        this.amount = initialDeposit;
+    }
+
+    public void Deposit(double amount)
+    {
+        this.amount += amount;
+        Console.WriteLine("Deposit successful. Current balance: " + this.amount);
+    }
+
+    public void Withdraw(double amount)
+    {
+        if (amount <= withdrawLimit && amount <= this.amount)
+        {
+            this.amount -= amount;
+            Console.WriteLine("Withdrawal successful. Current balance: " + this.amount);
+        }
+        else
+        {
+            Console.WriteLine("Withdrawal failed. Exceeds withdrawal limit or insufficient balance.");
+        }
+    }
+
+    public void HouseLoan()
+    {
+        Console.WriteLine("HDFC Home Loan: Interest Rate - " + (homeLoanInterestRate * 100) + "% per annum");
+    }
+
+    public void VehicleLoan()
+    {
+        Console.WriteLine("HDFC Vehicle Loan: Interest Rate - " + (vehicleLoanInterestRate * 100) + "% per annum");
+    }
+}
+
+// ICICI Bank class implementing RBI interface
+public class ICICI : RBI
+{
+    private string name;
+    private string address;
+    private DateTime opening;
+    private double amount;
+
+    private const double homeLoanInterestRate = 0.18;
+    private const double vehicleLoanInterestRate = 0.11;
+    private const double withdrawLimit = 35000;
+
+    // User-defined constructor for opening an account
+    public ICICI(string name, string address, double initialDeposit)
+    {
+        this.name = name;
+        this.address = address;
+        this.opening = DateTime.Now;
+        this.amount = initialDeposit;
+    }
+
+    public void Deposit(double amount)
+    {
+        this.amount += amount;
+        Console.WriteLine("Deposit successful. Current balance: " + this.amount);
+    }
+
+    public void Withdraw(double amount)
+    {
+        if (amount <= withdrawLimit && amount <= this.amount)
+        {
+            this.amount -= amount;
+            Console.WriteLine("Withdrawal successful. Current balance: " + this.amount);
+        }
+        else
+        {
+            Console.WriteLine("Withdrawal failed. Exceeds withdrawal limit or insufficient balance.");
+        }
+    }
+
+    public void HouseLoan()
+    {
+        Console.WriteLine("ICICI Home Loan: Interest Rate - " + (homeLoanInterestRate * 100) + "% per annum");
+    }
+
+    public void VehicleLoan()
+    {
+        Console.WriteLine("ICICI Vehicle Loan: Interest Rate - " + (vehicleLoanInterestRate * 100) + "% per annum");
+    }
+}
+
+public class Program
+{
+    public static void Main(string[] args)
+    {
+        Console.WriteLine("Choose a bank to open an account (HDFC or ICICI):");
+        string bankChoice = Console.ReadLine();
+
+        Console.WriteLine("Enter your name:");
+        string name = Console.ReadLine();
+
+        Console.WriteLine("Enter your address:");
+        string address = Console.ReadLine();
+
+        Console.WriteLine("Enter the initial deposit amount:");
+        double initialDeposit = double.Parse(Console.ReadLine());
+
+        // Opening an account based on the bank choice
+        if (bankChoice.ToUpper() == "HDFC")
+        {
+            HDFC hdfcAccount = new HDFC(name, address, initialDeposit);
+            Console.WriteLine("HDFC account opened successfully!");
+            hdfcAccount.Deposit(10000);
+            hdfcAccount.Withdraw(20000);
+            hdfcAccount.HouseLoan();
+            hdfcAccount.VehicleLoan();
+        }
+        else if (bankChoice.ToUpper() == "ICICI")
+        {
+            ICICI iciciAccount = new ICICI(name, address, initialDeposit);
+            Console.WriteLine("ICICI account opened successfully!");
+            iciciAccount.Deposit(15000);
+            iciciAccount.Withdraw(30000);
+            iciciAccount.HouseLoan();
+            iciciAccount.VehicleLoan();
+        }
+        else
+        {
+            Console.WriteLine("Invalid bank choice. Please choose either HDFC or ICICI.");
+        }
+    }
+}
