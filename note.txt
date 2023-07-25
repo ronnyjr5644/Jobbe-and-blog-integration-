@@ -115,40 +115,109 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        Console.WriteLine("Choose a bank to open an account (HDFC or ICICI):");
-        string bankChoice = Console.ReadLine();
-
-        Console.WriteLine("Enter your name:");
-        string name = Console.ReadLine();
-
-        Console.WriteLine("Enter your address:");
-        string address = Console.ReadLine();
-
-        Console.WriteLine("Enter the initial deposit amount:");
-        double initialDeposit = double.Parse(Console.ReadLine());
-
-        // Opening an account based on the bank choice
-        if (bankChoice.ToUpper() == "HDFC")
+        while (true)
         {
-            HDFC hdfcAccount = new HDFC(name, address, initialDeposit);
-            Console.WriteLine("HDFC account opened successfully!");
-            hdfcAccount.Deposit(10000);
-            hdfcAccount.Withdraw(20000);
-            hdfcAccount.HouseLoan();
-            hdfcAccount.VehicleLoan();
-        }
-        else if (bankChoice.ToUpper() == "ICICI")
-        {
-            ICICI iciciAccount = new ICICI(name, address, initialDeposit);
-            Console.WriteLine("ICICI account opened successfully!");
-            iciciAccount.Deposit(15000);
-            iciciAccount.Withdraw(30000);
-            iciciAccount.HouseLoan();
-            iciciAccount.VehicleLoan();
-        }
-        else
-        {
-            Console.WriteLine("Invalid bank choice. Please choose either HDFC or ICICI.");
-        }
+            Console.WriteLine("Choose a bank to open an account (HDFC or ICICI) or type 'exit' to quit:");
+            string bankChoice = Console.ReadLine();
+
+            if (bankChoice.ToLower() == "exit")
+                break;
+
+            Console.WriteLine("Enter your name:");
+            string name = Console.ReadLine();
+
+            Console.WriteLine("Enter your address:");
+            string address = Console.ReadLine();
+
+            Console.WriteLine("Enter the initial deposit amount:");
+            double initialDeposit = double.Parse(Console.ReadLine());
+
+            // Opening an account based on the bank choice
+            if (bankChoice.ToUpper() == "HDFC")
+            {
+                HDFC hdfcAccount = new HDFC(name, address, initialDeposit);
+                Console.WriteLine("HDFC account opened successfully!");
+
+                while (true)
+                {
+                    Console.WriteLine("Choose an operation (deposit, withdraw, houseloan, vehicleloan) or type 'exit' to go back:");
+                    string operationChoice = Console.ReadLine();
+
+                    if (operationChoice.ToLower() == "exit")
+                        break;
+
+                    switch (operationChoice.ToLower())
+                    {
+                        case "deposit":
+                            Console.WriteLine("Enter the amount to deposit:");
+                            double depositAmount = double.Parse(Console.ReadLine());
+                            hdfcAccount.Deposit(depositAmount);
+                            break;
+
+                        case "withdraw":
+                            Console.WriteLine("Enter the amount to withdraw:");
+                            double withdrawAmount = double.Parse(Console.ReadLine());
+                            hdfcAccount.Withdraw(withdrawAmount);
+                            break;
+
+                        case "houseloan":
+                            hdfcAccount.HouseLoan();
+                            break;
+
+                        case "vehicleloan":
+                            hdfcAccount.VehicleLoan();
+                            break;
+
+                        default:
+                            Console.WriteLine("Invalid operation choice.");
+                            break;
+                    }
+                }
+            }
+            else if (bankChoice.ToUpper() == "ICICI")
+            {
+                ICICI iciciAccount = new ICICI(name, address, initialDeposit);
+                Console.WriteLine("ICICI account opened successfully!");
+
+                while (true)
+                {
+                    Console.WriteLine("Choose an operation (deposit, withdraw, houseloan, vehicleloan) or type 'exit' to go back:");
+                    string operationChoice = Console.ReadLine();
+
+                    if (operationChoice.ToLower() == "exit")
+                        break;
+
+                    switch (operationChoice.ToLower())
+                    {
+                        case "deposit":
+                            Console.WriteLine("Enter the amount to deposit:");
+                            double depositAmount = double.Parse(Console.ReadLine());
+                            iciciAccount.Deposit(depositAmount);
+                            break;
+
+                        case "withdraw":
+                            Console.WriteLine("Enter the amount to withdraw:");
+                            double withdrawAmount = double.Parse(Console.ReadLine());
+                            iciciAccount.Withdraw(withdrawAmount);
+                            break;
+
+                        case "houseloan":
+                            iciciAccount.HouseLoan();
+                            break;
+
+                        case "vehicleloan":
+                            iciciAccount.VehicleLoan();
+                            break;
+
+                        default:
+                            Console.WriteLine("Invalid operation choice.");
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid bank choice. Please choose either HDFC or ICICI.");
+            }
     }
 }
